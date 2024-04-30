@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: aquamarine;
+            height: 300px;
+        }
+
+        input[type="text"], input[type="password"], button {
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+            width: auto;
+            height: 20px;
+            border-radius: 5px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            padding-right: 15px;
+        }
+        form {
+            background-color: ble;
+            padding-left: 200px;
+            /* padding-top: 50px; */
+        }
+        button {
+            margin-left: 50px; 
+            width: 80px;
+            height: 30px; 
+            /* font-size: 20px; */
+        }
+    </style>
+</head> 
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Enter username" required>
+            <input type="password" id="password" placeholder="Enter password" required>
+            <button id="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response => response.json())
+            .then(users => {
+                const user = users.find(user => user.username === username);
+
+                if (user) {
+                    if (password === "password") {
+                        window.location.href = "posts.html";
+                    } else {
+                        alert("Incorrect password!");
+                    }
+                } else {
+                    alert("User not found!");
+                }
+            })
+            .catch(error => alert("Error fetching users:", error));
+    });
+</script>
+</html>
